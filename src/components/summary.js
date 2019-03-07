@@ -25,7 +25,9 @@ const Summary = () => {
     // save data to local storage
     const saveData = () => {
         if (window.localStorage) {
-            if (bookingSummary.quantity < getQuantity()) {
+            if (!bookingSummary.room) {
+                return alert('Please select a room');
+            } else if (bookingSummary.quantity < getQuantity()) {
                 return alert(`Are you planning on sleeping on the floor? Please choose a higher room quantity.`);
             } else if (bookingSummary.quantity > getQuantity()) {
                 alert(`Warning! There are more beds than people, saving data anyway!`);
