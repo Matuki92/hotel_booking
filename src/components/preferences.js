@@ -10,6 +10,7 @@ const Preferences = () => {
         adults: 1,
         children: 0
     });
+
     // get context data for editing
     const { bookingSummary, dispatch } = useContext(BookingSummary);
 
@@ -29,9 +30,10 @@ const Preferences = () => {
 
     // send new data to summary
     const handleModifyButton = () => {
-        if (state.adults) {
-            dispatch({ type: 'SET_ROOM_QUANTITY', payload: getQuantity() });
-            dispatch({ type: 'UPDATE_PREFERENCES', payload: state });
+        if (state.adults && bookingSummary.room) {
+            dispatch({ type: 'UPDATE_PREFERENCES', payload: { ...state, quantity: getQuantity() } });
+        } else {
+            alert('Please select a room first!');
         }
     }
 

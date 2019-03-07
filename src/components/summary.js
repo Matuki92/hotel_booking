@@ -7,7 +7,7 @@ const Summary = () => {
 
     // get summary context data
     const { bookingSummary, dispatch } = useContext(BookingSummary);
-
+    console.log(bookingSummary.quantity);
     // change quantity value
     const handleQuantity = ({ target }) => {
         dispatch({ type: 'SET_ROOM_QUANTITY', payload: target.value });
