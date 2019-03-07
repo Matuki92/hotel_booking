@@ -7,7 +7,7 @@ const Summary = () => {
 
     // get summary context data
     const { bookingSummary, dispatch } = useContext(BookingSummary);
-    console.log(bookingSummary.quantity);
+
     // change quantity value
     const handleQuantity = ({ target }) => {
         dispatch({ type: 'SET_ROOM_QUANTITY', payload: target.value });
@@ -15,18 +15,22 @@ const Summary = () => {
 
     // get room quantity based on the amount of people in the booking
     const getQuantity = () => {
-        // convert values to numbers and get sum
-        const totalPeople = parseInt(bookingSummary.adults) + parseInt(bookingSummary.children);
-        const quantity = Math.ceil(totalPeople / bookingSummary.room.people);
-
-        return quantity;
+        if (bookingSummary.room) {
+            // convert values to numbers and get sum
+            const totalPeople = parseInt(bookingSummary.adults) + parseInt(bookingSummary.children);
+            const quantity = Math.ceil(totalPeople / bookingSummary.room.people);
+    
+            return quantity;
+        } else {
+            return 1;
+        }
     }
 
     // save data to local storage
     const saveData = () => {
         if (window.localStorage) {
             if (!bookingSummary.room) {
-                return alert('Please select a room');
+                return alert('Please select a room first!');
             } else if (bookingSummary.quantity < getQuantity()) {
                 return alert(`Are you planning on sleeping on the floor? Please choose a higher room quantity.`);
             } else if (bookingSummary.quantity > getQuantity()) {
@@ -45,7 +49,7 @@ const Summary = () => {
             <div className="form-group pull-right">
                 <select 
                     onChange={handleQuantity}
-                    value={bookingSummary.quantity} 
+                    value={getQuantity()} 
                     className="pull-right" 
                     id="rooms"
                 >

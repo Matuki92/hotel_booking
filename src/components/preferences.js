@@ -19,19 +19,10 @@ const Preferences = () => {
         setState({ ...state, [target.name]: target.value});
     }
 
-    // get room quantity based on the amount of people in the booking
-    const getQuantity = () => {
-        // convert values to numbers and get sum
-        const totalPeople = parseInt(bookingSummary.adults) + parseInt(bookingSummary.children);
-        const quantity = Math.ceil(totalPeople / bookingSummary.room.people);
-
-        return quantity;
-    }
-
     // send new data to summary
     const handleModifyButton = () => {
         if (state.adults && bookingSummary.room) {
-            dispatch({ type: 'UPDATE_PREFERENCES', payload: { ...state, quantity: getQuantity() } });
+            return dispatch({ type: 'UPDATE_PREFERENCES', payload: state });
         } else {
             alert('Please select a room first!');
         }
@@ -47,7 +38,7 @@ const Preferences = () => {
 
                     <div className="form-group">
                         <div className="input-group date" data-date-format="dd/mm/yyyy">
-                            <input value={bookingSummary.checkIn ? bookingSummary.checkIn : '--'} id="checkin" type="text" className="form-control" placeholder="Check in"/>
+                            <input readOnly value={bookingSummary.checkIn ? bookingSummary.checkIn : '--'} id="checkin" type="text" className="form-control" placeholder="Check in"/>
                             <div className="input-group-addon" >
                                 <span className="glyphicon glyphicon-calendar"></span>
                             </div>
@@ -56,7 +47,7 @@ const Preferences = () => {
 
                     <div className="form-group">
                         <div className="input-group date" data-date-format="dd/mm/yyyy">
-                            <input value={bookingSummary.checkOut ? bookingSummary.checkOut : '--'} id="checkout" type="text" className="form-control" placeholder="Checkout"/>
+                            <input readOnly value={bookingSummary.checkOut ? bookingSummary.checkOut : '--'} id="checkout" type="text" className="form-control" placeholder="Checkout"/>
                             <div className="input-group-addon" >
                                 <span className="glyphicon glyphicon-calendar"></span>
                             </div>
