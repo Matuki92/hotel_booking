@@ -26,6 +26,9 @@ const Summary = () => {
         }
     }
 
+    const calcQuantity = getQuantity();
+    let quantityValue = bookingSummary.quantity >= calcQuantity ? bookingSummary.quantity : calcQuantity;
+
     // save data to local storage
     const saveData = () => {
         if (window.localStorage) {
@@ -49,7 +52,7 @@ const Summary = () => {
             <div className="form-group pull-right">
                 <select 
                     onChange={handleQuantity}
-                    value={getQuantity()} 
+                    value={quantityValue} 
                     className="pull-right" 
                     id="rooms"
                 >
@@ -95,7 +98,7 @@ const Summary = () => {
                     <p className="base"><a href="#">Price details ></a></p>
                 </div>
                 <div className="right pull-right">
-                    <p className="main">{bookingSummary.room ? `$${bookingSummary.room.price * bookingSummary.quantity}` : '--'}</p>
+                    <p className="main">{bookingSummary.room ? `$${bookingSummary.room.price * quantityValue}` : '--'}</p>
                 </div>
             </div>
 
